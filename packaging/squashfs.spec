@@ -4,6 +4,7 @@ Release:	1
 Summary:	Tools for squashfs, a compressed read-only filesystem for Linux
 Group:		System/Tools
 Source0:	%{name}-%{version}.tar.gz
+Source100:	%{name}.manifest
 Patch0:		squashfs-4.2-makefile_config.patch
 License:	GPL
 URL:		http://squashfs.sourceforge.net/
@@ -22,6 +23,7 @@ The filesystem is currently stable, and has been tested on PowerPC, i586, Sparc 
 %prep
 %setup -q
 %patch0 -p1
+cp %{SOURCE100} .
 
 %build
 cd squashfs-tools
@@ -32,15 +34,21 @@ rm -rf %{buildroot}
 cd squashfs-tools
 mkdir -p %{buildroot}%{_bindir}
 install mksquashfs %{buildroot}%{_bindir}/mksquashfs
+%if 0%{?tizen_build_binary_release_type_eng}
 install unsquashfs %{buildroot}%{_bindir}/unsquashfs
+%endif
 
 mkdir -p %{buildroot}/usr/share/license
 cp -f ../COPYING %{buildroot}/usr/share/license/%{name}
 
 %files
 %defattr(-,root,root)
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/mksquashfs
+%if 0%{?tizen_build_binary_release_type_eng}
+%attr(755,root,root) %{_bindir}/unsquashfs
+%endif
 %doc CHANGES COPYING README
+%manifest %{name}.manifest
 /usr/share/license/%{name}
 
 %changelog
