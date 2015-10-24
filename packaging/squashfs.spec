@@ -6,9 +6,8 @@ Group:		System/Tools
 Source0:	%{name}-%{version}.tar.gz
 Source100:	%{name}.manifest
 Patch0:		squashfs-4.2-makefile_config.patch
-License:	GPL
+License:	GPL-2.0+
 URL:		http://squashfs.sourceforge.net/
-BuildRequires:	eglibc-devel
 BuildRequires:	lzo-devel
 BuildRequires:	zlib-devel
 Requires:	lzo
